@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+"use client";
+import emailjs from "@emailjs/browser";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -20,27 +22,35 @@ const Contact: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Replace with your actual form submission logic
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const result = await emailjs.sendForm(
+        "service_s7phi0f",
+        "template_20vdpct",
+        e.currentTarget as HTMLFormElement,
+        "uJ6lJJWgLQR6LBbJA"
+      );
+
+      console.log(result.text);
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -222,7 +232,7 @@ const Contact: React.FC = () => {
 
             <div className="p-4 aspect-video flex items-center justify-center overflow-hidden relative rounded-xl">
               {/* Animated colorful background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-indigo-400/30 to-purple-400/40 animate-gradient-x rounded-xl blur-sm z-0"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-black-100 animate-gradient-x rounded-xl blur-sm z-0"></div>
               {/* Slides */}
               {slideIndex === 0 ? (
                 <motion.div
@@ -272,4 +282,4 @@ const Contact: React.FC = () => {
   );
 };
 
-export default Contact; 
+export default Contact;

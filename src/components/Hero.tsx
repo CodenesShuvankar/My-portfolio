@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
         {/* Avatar */}
         <div className="mb-4 -mt-20 w-48 h-48 rounded-full overflow-hidden border-4 border-cyan-glow shadow-xl mx-auto">
           <img
-            src="/assets/images/avatar.jpg"
+            src="/assets/images/Mypic.png"
             alt="Avatar"
             className="w-full h-full object-cover"
           />

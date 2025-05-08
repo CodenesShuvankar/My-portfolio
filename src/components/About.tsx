@@ -116,7 +116,7 @@ const About: React.FC = () => {
                 >
                   <video
                     className="w-full h-full rounded-xl"
-                    src="/assets/videos/bg1.mp4"
+                    src="/assets/videos/mystyle.mp4"
                     controls={showControls}
                     autoPlay
                     loop
